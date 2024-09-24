@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Growth Graph</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+</head>
+<body>
+    <div class="container">
+        <h1>Investment Growth Over Time</h1>
+        <canvas id="growthChart" width="400" height="200"></canvas> <!-- Canvas for the chart -->
+
+        <script>
+            // Function to get URL parameters
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                const results = regex.exec(window.location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+            // Get parameters from the URL
+            const amount = parseFloat(getUrlParameter('amount'));
+            const period = parseInt(getUrlParameter('period'));
+            const totalAmount = parseFloat(getUrlParameter('total_amount'));
+
+            // Data for the chart
+            const labels = Array.from({ length: period }, (_, i) => `Month ${i + 1}`);
+            const data = Array.from({ length: period }, (_, i) => amount * (1 + (totalAmount - amount) / amount * (i + 1) / period));
+
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            const growthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Investment Growth',
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Total Amount ($)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time (Months)'
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+
+        <br>
+        <a href="index.html"><button>Back to Home</button></a> <!-- Button to go back -->
+    </div>
+</body>
+</html>
