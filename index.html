@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AppInvest</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <div class="container">
         <h1>Welcome to AppInvest</h1>
-        <form action="/calculate" method="POST">
+        <form id="investmentForm">
             <label for="amount">Investment Amount ($):</label>
             <input type="number" id="amount" name="amount" required>
             <label for="period">Investment Period (months):</label>
@@ -17,13 +17,15 @@
             <button type="submit">Calculate</button>
         </form>
 
-        {% if gains %}
-        <h2>Results</h2>
-        <p>Gains: {{ gains }}</p>
-        <p>Total Amount: {{ total_amount }}</p>
-        <p>Forecasted Amount after {{ period }} months: {{ forecasted_amount }}</p>
-        <p>Gain Margin: {{ gain_margin }}%</p>
-        {% endif %}
+        <div id="results" style="display: none;">
+            <h2>Results</h2>
+            <p id="gains"></p>
+            <p id="totalAmount"></p>
+            <p id="forecastedAmount"></p>
+            <p id="gainMargin"></p>
+        </div>
     </div>
+
+    <script src="static/script.js"></script>
 </body>
 </html>
