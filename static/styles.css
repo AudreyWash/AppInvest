@@ -1,12 +1,23 @@
 body {
     font-family: Arial, sans-serif; /* Font style for better readability */
-    background-color: #f9f9f9; /* Optional light background for body */
+    background-color: #9be092; /* Optional light background for body */
     display: flex; /* Enable Flexbox on the body */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     height: 100vh; /* Make the body take the full height of the viewport */
     margin: 0; /* Remove default margin */
+    background-image: repeating-linear-gradient(
+        45deg, 
+        transparent, 
+        transparent 30px, 
+        rgba(0, 0, 0, 0.1) 30px, 
+        rgba(0, 0, 0, 0.1) 60px
+    ),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="0" y="40" font-size="40" fill="white" font-family="Arial">$</text><text x="50" y="40" font-size="40" fill="white" font-family="Arial">$</text></svg>');
+    background-size: 50px 50px; /* Adjust size of the repeating pattern */
+    background-repeat: repeat; /* Repeat the background image */
 }
+
 
 .container {
     max-width: 600px; /* Set a max width for the container */
