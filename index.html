@@ -8,53 +8,27 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Flexbox for the title -->
-    <div class="header-container">
-        <h1 class="header">Welcome to AppInvest</h1>
-    </div>
+    <div class="container">
+        <h1>Welcome to AppInvest</h1>
+        <form id="investment-form">
+            <label for="amount">Investment Amount ($):</label>
+            <input type="number" id="amount" name="amount" required>
+            <label for="period">Investment Period (months):</label>
+            <input type="number" id="period" name="period" value="12">
+            <button type="submit">Calculate</button>
+        </form>
 
-    <!-- Flexbox for the calculators -->
-    <div class="calculators-container">
-        <!-- Investment Calculator Box -->
-        <div class="calculator-box">
-            <form id="investment-form">
-                <label for="amount">Investment Amount ($):</label>
-                <input type="number" id="amount" name="amount" required>
-                <label for="period">Investment Period (months):</label>
-                <input type="number" id="period" name="period" value="12">
-                <button type="submit">Calculate</button>
-            </form>
-
-            <div id="results" style="display: none;">
-                <h2>Results</h2>
-                <p id="gains"></p>
-                <p id="total_amount"></p>
-                <p id="forecasted_amount"></p>
-                <p id="gain_margin"></p>
-                <button id="view-graph" style="display: none;">View Growth Graph</button>
-            </div>
-        </div>
-
-        <!-- Budgeting Calculator Box -->
-        <div class="calculator-box">
-            <form id="budget-form">
-                <label for="income">Monthly Income ($):</label>
-                <input type="number" id="income" name="income" required>
-                <label for="expenses">Monthly Expenses ($):</label>
-                <input type="number" id="expenses" name="expenses" required>
-                <button type="submit">Calculate Budget</button>
-            </form>
-
-            <div id="budget-results" style="display: none;">
-                <h2>Budget Results</h2>
-                <p id="savings"></p>
-                <p id="remaining"></p>
-            </div>
+        <div id="results" style="display: none;">
+            <h2>Results</h2>
+            <p id="gains"></p>
+            <p id="total_amount"></p>
+            <p id="forecasted_amount"></p>
+            <p id="gain_margin"></p>
+            <button id="view-graph" style="display: none;">View Growth Graph</button>
         </div>
     </div>
 
     <script>
-        // Investment Calculator Logic
         document.getElementById('investment-form').addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent form submission
 
@@ -78,23 +52,6 @@
             document.getElementById('view-graph').onclick = function() {
                 window.location.href = `graph.html?amount=${totalAmount.toFixed(2)}&period=${period}`;
             };
-        });
-
-        // Budgeting Calculator Logic
-        document.getElementById('budget-form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent form submission
-
-            const income = parseFloat(document.getElementById('income').value);
-            const expenses = parseFloat(document.getElementById('expenses').value);
-            
-            // Calculate savings and remaining budget
-            const savings = income - expenses;
-            const remaining = (savings >= 0) ? savings : 0; // Avoid negative remaining
-
-            // Display results
-            document.getElementById('savings').innerText = `Savings: $${savings.toFixed(2)}`;
-            document.getElementById('remaining').innerText = `Remaining Budget: $${remaining.toFixed(2)}`;
-            document.getElementById('budget-results').style.display = 'block';
         });
     </script>
 </body>
