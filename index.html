@@ -1,58 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AppInvest</title>
-    <link rel="stylesheet" href="static/css/style.css">
-    <script src="script.js" defer></script>
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to AppInvest</h1>
-        <form id="investment-form">
-            <label for="amount">Investment Amount ($):</label>
-            <input type="number" id="amount" name="amount" required>
-            <label for="period">Investment Period (months):</label>
-            <input type="number" id="period" name="period" value="12">
-            <button type="submit">Calculate</button>
-        </form>
 
-        <div id="results" style="display: none;">
-            <h2>Results</h2>
-            <p id="gains"></p>
-            <p id="total_amount"></p>
-            <p id="forecasted_amount"></p>
-            <p id="gain_margin"></p>
-            <button id="view-graph" style="display: none;">View Growth Graph</button>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Investment Calculator" />
+    <title>Investment Calculator</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="dependency/bootstrap.min.css" media="all" />
+    <link rel="stylesheet" href="dependency/fontawesome.min.css" media="all" />
+    <link rel="stylesheet" href="css/style.css" media="all" />
+</head>
+
+<body class="dark">
+
+    <!-- TODOS:
+        add tooltips
+    -->
+
+    <div class="toggle-btns text-right">
+        <a id="toggleLight" href="javascript:void(0)">☀</a>
+        <a id="toggleDark" href="javascript:void(0)">🌑</a>
+    </div>
+
+    <div class="container">
+        <h1 class="text-center mb-3"><b>Welcome to AppInvest - Your Smart Investment Calculator</b></h1>
+
+        <div class="col-md-12 inputs">
+            <h2 class="text-center mb-3"><i class="far fa-money-bill-alt"></i> Input Amounts</h2>
+            <form>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                        <label for="startingBal"><i class="fas fa-dollar-sign"></i> Starting Balance</label>
+                        <input type="number" class="form-control" id="startingBalance" value="1000" min="1"
+                            max="999999999">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <label for="expectedReturn"><i class="fas fa-percentage"></i> Expected Return (%)</label>
+                        <input type="number" class="form-control" id="expectedReturn" value="6" min="1" max="100">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <label for="monthlyDep"><i class="far fa-calendar-alt"></i> Monthly Deposit</label>
+                        <input type="number" class="form-control" id="monthlyDeposit" value="100" min="1"
+                            max="999999999">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <label for="duration"><i class="far fa-clock"></i> Duration (years)</label>
+                        <input type="number" class="form-control" id="duration" value="5" min="1" max="999">
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <button type="submit" class="btn btn-primary my-4 m-auto" id="submit">
+                        Calculate Balance
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-12 inputs mt-4" id="report-section">
+            <h2 class="text-center mb-3"><i class="far fa-chart-bar"></i> Growth Chart</h2>
+            <h3 class="text-center mb-3" id="totalValue"></h3>
+            <h5 class="chartDiv"></h5>
+            <div id="chartContainer">
+                <canvas id="growthChart"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-12 inputs mt-4" id="yearBreakdow">
+            <h2 class="text-center mb-3"><i class="fas fa-chart-line"></i> Year Amount</h2>
+            <div class="row" id="breakdow"></div>
         </div>
     </div>
 
-    <script>
-        document.getElementById('investment-form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent form submission
+    <footer class="col-md-12 mt-3">
+        <p class="text-center copyright">
+            Copyright&copy;
+            <a href="https://github.com/AudreyWash">Audrey Washington-Wright</a>
+            <script>
+                document.write(new Date().getFullYear())
+            </script>
+        </p>
+    </footer>
 
-            const amount = parseFloat(document.getElementById('amount').value);
-            const period = parseInt(document.getElementById('period').value);
-            
-            // Calculate gains (you can adjust this calculation as needed)
-            const gains = amount * 0.1 * period; // Example calculation
-            const totalAmount = amount + gains;
-            const gainMargin = (gains / amount) * 100;
-
-            // Display results
-            document.getElementById('gains').innerText = `Gains: $${gains.toFixed(2)}`;
-            document.getElementById('total_amount').innerText = `Total Amount: $${totalAmount.toFixed(2)}`;
-            document.getElementById('forecasted_amount').innerText = `Forecasted Amount after ${period} months: $${totalAmount.toFixed(2)}`;
-            document.getElementById('gain_margin').innerText = `Gain Margin: ${gainMargin.toFixed(2)}%`;
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('view-graph').style.display = 'block';
-
-            // Set the button to link to graph.html with parameters
-            document.getElementById('view-graph').onclick = function() {
-                window.location.href = `graph.html?amount=${totalAmount.toFixed(2)}&period=${period}`;
-            };
-        });
-    </script>
+    <script src="dependency/chartjs.min.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/theme.js"></script>
 </body>
+
 </html>
